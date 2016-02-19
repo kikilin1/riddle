@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todays Riddles</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+       <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+        <style>
+            #box1{
+                border: 2px solid;
+                min-height:300px;
+                font-family: cursive;
+                font-size: 20px;
+                text-align: center;
+                padding-top: 120px;
+                padding-bottom: 120px;
+            }
+            #box2{
+                border: 2px solid;
+                min-height:200px;
+                font-family: cursive;
+                font-size: 20px;
+                text-align: center;
+                padding-top: 120px;
+                padding-bottom: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <center><h2>Todays Riddle is:</h2></center>
+                    <div id="box1">
+                    </div>
+                </div>
+                </div>
+            
+            
+            <h4>Response</h4>
+            
+            
+            
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="answer" type="text" class="validate">
+                    <label class="active" for="correct-answer">Answer</label>
+                </div>
+                </div>
+            <div class="btn col s4" id="check"><i class="material-icons">thumb_up</i>Check</div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col s12" id="box2">
+                </div>
+            </div>
+            <div class="btn col s4" id="reflash"><i class="material-icons">loop</i>Reset</div>
+        </div>
+        </div>
+        <script>
+            var answer;
+            $.ajax({
+                url:"http://www.fvi-grad.com:4004/riddles",
+                success: function(res, txt, xhr){
+                    $("#box1").text(res.riddleText);
+                    answer=res.answer;
+                    console.log(res);
+                }
+            });
+            
+            $("#reflash").click(function(){
+                 $("#box2").html("");
+                $.ajax({
+                url:"http://www.fvi-grad.com:4004/riddles",
+                success: function(res, txt, xhr){
+                    $("#box1").text(res.riddleText);
+                    console.log(res);answer=res.answer;
+                }
+                })
+               
+            });
+            
+            
+            $("#check").click(function(){
+                var userAnswer=$("#answer").val();
+                if(answer===userAnswer){
+                   $("#box2").text("Correct!");
+                
+                }
+                else{
+                    $("#box2").text("You are wrong!");
+                }
+                    
+            
+            
+            
+            
+            });
+            
+            
+            
+            
+    </script>
+    </body>
+</html>
